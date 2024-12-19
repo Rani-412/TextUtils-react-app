@@ -2,11 +2,13 @@ import React from 'react';
 
 function Alert({ alert }) {
   return (
-    alert && (
-      <div className={`alert alert-${alert.type} alert-dismissible fade show`} role="alert">
-        <strong>{alert.msg}</strong>
-      </div>
-    )
+    <div style={{ height: '50px' }}>
+      {alert && (  // Correct placement of curly braces and condition
+        <div className={`alert alert-${alert.type} alert-dismissible fade show`} role="alert">
+          <strong>{alert.msg}</strong>
+        </div>
+      )}
+    </div>
   );
 }
 

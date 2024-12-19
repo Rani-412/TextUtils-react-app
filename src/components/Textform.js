@@ -22,13 +22,25 @@ export default function Textform(props) {
   };
   const handleCopyClick = () => {
     navigator.clipboard.writeText(text);
-    alert("Text copied to clipboard!");
+    //alert("Text copied to clipboard!");
     props.showAlert("Text is copied to clipboard", "success");
 };
 
   const handleOnChange=(event)=>{
     console.log("On Change");
     setText(event.target.value);  //update text when the user types
+  };
+   // New states to manage focus and text input
+  const handleFocus = () => {
+    if (text === "Enter text here") {
+      setText("");
+    }
+  };
+
+  const handleBlur = () => {
+    if (text.trim() === "") {
+      setText("Enter text here");
+    }
   };
 
   const[text, setText]=useState("Enter text here"); //initialize state
@@ -41,20 +53,22 @@ const countWords = (text) => {
   return (
     <>
     <div className ="container">
-      <h1>{props.Heading}</h1>
+      <h1 className='mb-4'>{props.Heading}</h1>
       <div className="mb-3">
         <textarea 
         className="form-control" 
         value={text}
         onChange={handleOnChange} //Updated the text when user types
+        onFocus={handleFocus}  // Remove placeholder text on focus
+        onBlur={handleBlur}    // Add placeholder text back on blur if empty
         id="myText" rows="9"
         ></textarea>
         
 </div>
-  <button className="btn btn-primary mx-2 "onClick={handleUpClick}>Convert to Uppercase</button>
-   <button className="btn btn-primary mx-2 "onClick={handleLowClick}>Convert to Lowercase</button>
-   <button className="btn btn-primary mx-2 "onClick={handleClearClick}>Clear Text</button>
-   <button className="btn btn-primary mx-2 "onClick={handleCopyClick}>Copy to Clipboard</button>
+  <button disabled={text.length===0} className="btn btn-primary mx-2 my-2 "onClick={handleUpClick}>Convert to Uppercase</button>
+   <button disabled={text.length===0} className="btn btn-primary mx-2 my-2"onClick={handleLowClick}>Convert to Lowercase</button>
+   <button disabled={text.length===0} className="btn btn-primary mx-2 my-2"onClick={handleClearClick}>Clear Text</button>
+   <button disabled={text.length===0} className="btn btn-primary mx-2 my-2"onClick={handleCopyClick}>Copy to Clipboard</button>
     </div>
     <div className="container my-3">
       <h1>Your text summary</h1>
@@ -66,3 +80,4 @@ const countWords = (text) => {
     </>
   );
 }
+rfc
